@@ -1,4 +1,4 @@
-package com.oussama.starter;
+package com.oussama.eshop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

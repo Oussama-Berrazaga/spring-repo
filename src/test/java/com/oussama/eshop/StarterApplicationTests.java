@@ -1,4 +1,4 @@
-package com.oussama.starter;
+package com.oussama.eshop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.oussama</groupId>
-	<artifactId>starter</artifactId>
+	<artifactId>eshop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>starter</name>
 	<description>Starter project for Spring Boot</description>
