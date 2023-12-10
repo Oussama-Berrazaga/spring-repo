@@ -1,5 +1,6 @@
 package com.oussama.eshop.services;
 
+import com.oussama.eshop.domain.dto.CustomerDto;
 import com.oussama.eshop.domain.entities.Customer;
 
 import java.util.List;
@@ -7,12 +8,16 @@ import java.util.Optional;
 
 public interface CustomerService {
 
-    Customer save(Customer customer);
+    CustomerDto create(CustomerDto customer);
 
-    List<Customer> findAll();
+    List<CustomerDto> findAll();
 
-    Optional<Customer> findOne(Integer id);
+    CustomerDto findOne(Integer id);
     void delete(Integer id);
 
-    Customer update(Customer customer);
+    CustomerDto fullUpdate(CustomerDto customer);
+
+    CustomerDto partialUpdate(CustomerDto customer);
+
+    boolean exists(Integer id);
 }

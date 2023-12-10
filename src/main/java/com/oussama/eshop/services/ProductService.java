@@ -1,5 +1,6 @@
 package com.oussama.eshop.services;
 
+import com.oussama.eshop.domain.dto.ProductDto;
 import com.oussama.eshop.domain.entities.Product;
 import org.springframework.stereotype.Service;
 
@@ -9,11 +10,15 @@ import java.util.Optional;
 @Service
 public interface ProductService {
 
-    List<Product> findAll();
-    Optional<Product> findOne(Integer id);
-    Product save(Product product);
+    List<ProductDto> findAll();
+    ProductDto findOne(Integer id);
+
+    boolean exists(Integer id);
+    ProductDto save(ProductDto product);
 
     void delete(Integer id);
 
-    Product update(Product product);
+    ProductDto fullUpdate(ProductDto product);
+
+    ProductDto partialUpdate(ProductDto product);
 }

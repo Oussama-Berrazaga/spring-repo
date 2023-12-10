@@ -1,4 +1,8 @@
 package com.oussama.eshop.domain.dto;
 
-public class CustomerDto {
+import com.oussama.eshop.domain.entities.Cart;
+
+public class CustomerDto extends UserDto {
+
+    private CartDto cart;
 }

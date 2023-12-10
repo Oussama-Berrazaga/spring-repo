@@ -1,5 +1,6 @@
 package com.oussama.eshop.services;
 
+import com.oussama.eshop.domain.dto.CartDto;
 import com.oussama.eshop.domain.entities.Cart;
 
 
@@ -8,15 +9,17 @@ import java.util.Optional;
 
 public interface CartService {
 
-    Cart save(Cart cart);
+    CartDto save(CartDto cart);
 
-    List<Cart> findAll();
+    List<CartDto> findAll();
 
-    Optional<Cart> findOne(Integer id);
+    CartDto findOne(Integer id);
 
     void delete(Integer id);
 
-    Cart update(Cart cart);
+    CartDto fullUpdate(CartDto cart);
+
+    CartDto partialUpdate(CartDto cart);
 
     boolean exists(Integer id);
 }
