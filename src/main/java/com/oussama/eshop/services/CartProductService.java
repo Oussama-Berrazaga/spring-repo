@@ -11,4 +11,6 @@ public interface CartProductService {
     List<CartProduct> findCartProductByCartId(Integer cartId);
 
     List<CartProduct> findAll();
+
+    List<CartProduct> findCartProductsByCustomer(Integer userId);
 }

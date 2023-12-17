@@ -34,5 +34,6 @@ public class Cart {
 //    @JsonIgnore
     @JsonManagedReference
     @OneToMany(mappedBy = "cart", fetch = FetchType.LAZY)
+    @Builder.Default
     private List<CartProduct> cartProducts = new ArrayList<>();
 }

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "cart_products")
 public class CartProduct {
 
     @EmbeddedId
@@ -30,6 +31,6 @@ public class CartProduct {
     @JoinColumn(name = "cart_id")
     @JsonBackReference
     private Cart cart;
-
+    @Builder.Default
     private Integer quantity=0;
 }

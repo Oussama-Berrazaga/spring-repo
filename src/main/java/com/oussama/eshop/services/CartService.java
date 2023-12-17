@@ -22,4 +22,6 @@ public interface CartService {
     CartDto partialUpdate(CartDto cart);
 
     boolean exists(Integer id);
+
+    CartDto findCartByUserId(Integer id);
 }

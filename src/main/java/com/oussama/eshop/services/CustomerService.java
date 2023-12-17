@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface CustomerService {
 
-    CustomerDto create(CustomerDto customer);
 
     List<CustomerDto> findAll();
 
@@ -20,4 +19,6 @@ public interface CustomerService {
     CustomerDto partialUpdate(CustomerDto customer);
 
     boolean exists(Integer id);
+
+    CustomerDto findByEmail(String email);
 }

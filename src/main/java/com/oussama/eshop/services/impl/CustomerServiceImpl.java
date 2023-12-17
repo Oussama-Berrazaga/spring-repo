@@ -9,6 +9,8 @@ import com.oussama.eshop.repositories.CustomerRepository;
 import com.oussama.eshop.services.CartService;
 import com.oussama.eshop.services.CustomerService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,12 +30,6 @@ public class CustomerServiceImpl implements CustomerService {
         this.cartMapper = cartMapper;
     }
 
-    @Override
-    public CustomerDto create(CustomerDto customer) {
-        Customer newCustomer = mapper.mapFrom(customer);
-        newCustomer.setCart(cartMapper.mapFrom(cartService.save(cartMapper.mapTo(new Cart()))));
-        return mapper.mapTo(repository.save(newCustomer));
-    }
 
     @Override
     public List<CustomerDto> findAll() {
@@ -70,5 +66,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public boolean exists(Integer id) {
         return repository.existsById(id);
+    }
+
+    @Override
+    public CustomerDto findByEmail(String email) {
+        Customer customer = repository.findCustomerByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Customer not found with email " + email));
+        return mapper.mapTo(customer);
     }
 }

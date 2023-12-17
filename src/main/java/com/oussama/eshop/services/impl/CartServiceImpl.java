@@ -1,9 +1,7 @@
 package com.oussama.eshop.services.impl;
 
 import com.oussama.eshop.domain.dto.CartDto;
-import com.oussama.eshop.domain.dto.ProductDto;
 import com.oussama.eshop.domain.entities.Cart;
-import com.oussama.eshop.domain.entities.Product;
 import com.oussama.eshop.mappers.Mapper;
 import com.oussama.eshop.repositories.CartRepository;
 import com.oussama.eshop.services.CartService;
@@ -17,7 +15,7 @@ public class CartServiceImpl implements CartService {
 
 
     private final CartRepository cartRepository;
-    private final Mapper<Cart,CartDto> mapper;
+    private final Mapper<Cart, CartDto> mapper;
 
     public CartServiceImpl(CartRepository cartRepository, Mapper<Cart, CartDto> mapper) {
         this.cartRepository = cartRepository;
@@ -39,6 +37,7 @@ public class CartServiceImpl implements CartService {
         Cart cart = cartRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cart not found with id: " + id));
         return mapper.mapTo(cart);
     }
+
     @Override
     public void delete(Integer id) {
         if (cartRepository.existsById(id)) {
@@ -63,6 +62,12 @@ public class CartServiceImpl implements CartService {
     @Override
     public boolean exists(Integer id) {
         return cartRepository.existsById(id);
+    }
+
+    @Override
+    public CartDto findCartByUserId(Integer id) {
+        Cart cart = cartRepository.findByCustomerId(id);
+        return mapper.mapTo(cart);
     }
 
 
