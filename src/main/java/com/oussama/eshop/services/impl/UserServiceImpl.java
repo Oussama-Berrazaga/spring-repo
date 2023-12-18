@@ -1,27 +1,31 @@
 package com.oussama.eshop.services.impl;
 
+import com.oussama.eshop.config.JwtService;
+import com.oussama.eshop.controllers.requests.ChangePasswordReq;
 import com.oussama.eshop.domain.dto.UserDto;
 import com.oussama.eshop.domain.entities.User;
 import com.oussama.eshop.mappers.Mapper;
 import com.oussama.eshop.repositories.UserRepository;
 import com.oussama.eshop.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final Mapper<User, UserDto> mapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, Mapper<User, UserDto> mapper) {
-        this.userRepository = userRepository;
-        this.mapper = mapper;
-    }
 
     @Override
     public List<UserDto> findAll() {
@@ -40,6 +44,27 @@ public class UserServiceImpl implements UserService {
     public UserDto findByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with email " + email));
         return mapper.mapTo(user);
+    }
+
+    public void changePassword(ChangePasswordReq request, Principal connectedUser) {
+
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+
+        // check if the current password is correct
+        if (!passwordEncoder.matches(request.currentPassword(), user.getPassword())) {
+            throw new IllegalStateException("Wrong password");
+        }
+        // check if the two new passwords are the same
+        if (!request.newPassword().equals(request.confirmationPassword())) {
+            throw new IllegalStateException("Password are not the same");
+        }
+
+        // update the password
+        user.setPassword(passwordEncoder.encode(request.newPassword()));
+
+        // save the new password
+        userRepository.save(user);
+
     }
 
 }

@@ -1,5 +1,6 @@
 package com.oussama.eshop.controllers;
 
+import com.oussama.eshop.controllers.requests.ChangePasswordReq;
 import com.oussama.eshop.domain.dto.UserDto;
 import com.oussama.eshop.domain.entities.User;
 import com.oussama.eshop.services.UserService;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -22,5 +24,14 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    }
+
+    @PatchMapping("/changePassword")
+    public ResponseEntity<?> changePassword(
+            @RequestBody ChangePasswordReq request,
+            Principal connectedUser
+    ) {
+        userService.changePassword(request, connectedUser);
+        return ResponseEntity.ok().build();
     }
 }
