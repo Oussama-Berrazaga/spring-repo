@@ -1,6 +1,5 @@
 package com.oussama.eshop.services.impl;
 
-import com.oussama.eshop.config.JwtService;
 import com.oussama.eshop.controllers.requests.ChangePasswordReq;
 import com.oussama.eshop.domain.dto.UserDto;
 import com.oussama.eshop.domain.entities.User;
@@ -8,8 +7,8 @@ import com.oussama.eshop.mappers.Mapper;
 import com.oussama.eshop.repositories.UserRepository;
 import com.oussama.eshop.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findByEmail(String email) {
+    public UserDto findByEmail(@Email String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found with email " + email));
         return mapper.mapTo(user);
     }

@@ -2,7 +2,6 @@ package com.oussama.eshop.controllers;
 
 import com.oussama.eshop.controllers.requests.ChangePasswordReq;
 import com.oussama.eshop.domain.dto.UserDto;
-import com.oussama.eshop.domain.entities.User;
 import com.oussama.eshop.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
