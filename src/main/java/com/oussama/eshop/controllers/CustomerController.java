@@ -1,7 +1,10 @@
 package com.oussama.eshop.controllers;
 
+import com.oussama.eshop.controllers.requests.FindRequest;
+import com.oussama.eshop.controllers.responses.ListResponse;
 import com.oussama.eshop.domain.dto.CartDto;
 import com.oussama.eshop.domain.dto.CustomerDto;
+import com.oussama.eshop.domain.dto.ProductDto;
 import com.oussama.eshop.domain.entities.Cart;
 import com.oussama.eshop.domain.entities.Customer;
 import com.oussama.eshop.mappers.Mapper;
@@ -26,18 +29,25 @@ public class CustomerController {
 
 
     @GetMapping
-    public ResponseEntity<List<CustomerDto>> getAllCustomers(){
-        return new ResponseEntity<>(customerService.findAll(),HttpStatus.OK);
+    public ListResponse<List<CustomerDto>> getAllCustomers() {
+        List<CustomerDto> customers = customerService.findAll();
+        return new ListResponse<>(customers.size(), customers);
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteCustomer(@RequestBody Integer id){
+    public ResponseEntity<String> deleteCustomer(@RequestBody Integer id) {
         customerService.delete(id);
-        return new ResponseEntity<>("Customer with id "+id+" has been deleted successfully",HttpStatus.OK);
+        return new ResponseEntity<>("Customer with id " + id + " has been deleted successfully", HttpStatus.OK);
     }
 
     @GetMapping("/me")
-    public ResponseEntity<CustomerDto> getCurrentCustomer(Authentication auth){
+    public ResponseEntity<CustomerDto> getCurrentCustomer(Authentication auth) {
         return new ResponseEntity<>(customerService.findByEmail(auth.getName()), HttpStatus.OK);
+    }
+
+    @PostMapping("/findDynamic")
+    public ListResponse<List<CustomerDto>> findDynamicProduct(@RequestBody FindRequest request) {
+        List<CustomerDto> customers = customerService.findDynamicCustomers(request);
+        return new ListResponse<>(customers.size(), customers);
     }
 }

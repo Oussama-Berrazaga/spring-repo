@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductReq{
+public class ProductRequest {
     private String name;
     @JsonProperty("image_url")
     private String imageUrl;
+    private Long price;
 }

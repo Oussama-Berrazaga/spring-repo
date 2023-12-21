@@ -13,11 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class CartProductsRes extends Product {
+public class CartProductsResponse extends Product {
     Integer quantity;
 
-    public CartProductsRes(Integer id, @NotNull String name, String imageUrl, List<CartProduct> cartProducts, Integer quantity) {
-        super(id, name, imageUrl, cartProducts);
+    public CartProductsResponse(Integer id, @NotNull String name, String imageUrl, Long price, List<CartProduct> cartProducts, Integer quantity) {
+        super(id, name, imageUrl, price, cartProducts);
         this.quantity = quantity;
     }
 }

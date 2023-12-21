@@ -1,0 +1,36 @@
+### Login User
+POST http://localhost:8080/api/v1/auth/authenticate
+Content-Type: application/json
+
+{
+  "email": "john.smith@yopmail.com",
+  "password": "123456"
+}
+
+> {%
+    client.global.set("auth-token", response.body.access_token);
+    client.global.set("refresh-token", response.body.refresh_token);
+%}
+
+### Add multiple products
+POST http://localhost:8080/api/v1/products/createMultiple
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+[
+  {"name": "Product 1", "image_url": "https://example.com/product1.jpg"},
+  {"name": "Product 2", "image_url": "https://example.com/product2.jpg"},
+  {"name": "Product 3", "image_url": "https://example.com/product3.jpg"},
+  {"name": "Product 4", "image_url": "https://example.com/product4.jpg"},
+  {"name": "Product 5", "image_url": "https://example.com/product5.jpg"},
+  {"name": "Product 6", "image_url": "https://example.com/product6.jpg"},
+  {"name": "Product 7", "image_url": "https://example.com/product7.jpg"},
+  {"name": "Product 8", "image_url": "https://example.com/product8.jpg"},
+  {"name": "Product 9", "image_url": "https://example.com/product9.jpg"},
+  {"name": "Product 10", "image_url": "https://example.com/product10.jpg"}
+]
+
+### Get all products
+GET http://localhost:8080/api/v1/products
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}

@@ -1,63 +1,132 @@
 package com.oussama.eshop.controllers;
 
-import com.oussama.eshop.controllers.requests.ProductReq;
-import com.oussama.eshop.controllers.responses.ApiRes;
-import com.oussama.eshop.controllers.requests.IdReq;
+import com.oussama.eshop.controllers.requests.FindProductRequest;
+import com.oussama.eshop.controllers.requests.IdRequest;
+import com.oussama.eshop.controllers.requests.ProductRequest;
+import com.oussama.eshop.controllers.responses.ApiResponse;
+import com.oussama.eshop.controllers.responses.FileResponse;
+import com.oussama.eshop.controllers.responses.ListResponse;
 import com.oussama.eshop.domain.dto.ProductDto;
-import com.oussama.eshop.repositories.ProductRepository;
 import com.oussama.eshop.services.ProductService;
-import jakarta.transaction.Transactional;
+import com.oussama.eshop.controllers.requests.FindRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/products")
+@Log4j2
 public class ProductController {
+
     private final ProductService productService;
-    private final ProductRepository productRepository;
 
-
-
-    record ResponseWrapper(List<?> data, boolean status) {
-    }
+//    @GetMapping
+//    public ResponseEntity<ListResponse<List<ProductDto>>> getAllProducts() {
+//        List<ProductDto> products = productService.findAll();
+//        return new ResponseEntity<>(new ListResponse<>(products.size(), products), HttpStatus.OK);
+//    }
 
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getAllProducts() {
-        return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
+    private ListResponse<List<ProductDto>> getProductsWithSort(@RequestParam String field) {
+        List<ProductDto> allProducts = productService.findProductsWithSorting(field);
+        return new ListResponse<>(allProducts.size(), allProducts);
+    }
+
+    @GetMapping("/pagination")
+    private ListResponse<List<ProductDto>> getProductsWithPagination(@RequestParam Integer page, @RequestParam Integer size) {
+        if (page != null && size != null && size > 0) {
+            List<ProductDto> productsWithPagination = productService.findProductsWithPagination(page, size);
+            return new ListResponse<>(productsWithPagination.size(), productsWithPagination);
+        }
+        List<ProductDto> products = productService.findAll();
+        return new ListResponse<>(products.size(), products);
+    }
+
+    @GetMapping("/paginationAndSort")
+    private ResponseEntity<ListResponse<List<ProductDto>>> getProductsWithPaginationAndSort(@RequestParam int page, @RequestParam int size, @RequestParam String field) {
+        List<ProductDto> productsWithPagination = productService.findProductsWithPaginationAndSorting(page, size, field);
+        return ResponseEntity.ok(new ListResponse<>(productsWithPagination.size(), productsWithPagination));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductReq req) {
-        System.out.println(req);
-        //return ResponseEntity.ok("Hello");
-        //return ResponseEntity.ok(Product.builder().id(1).name("Prod1").imageUrl("url").build());
-        //return new ResponseEntity<>(productRepository.save(req),HttpStatus.CREATED);
-        return new ResponseEntity<>(productService.save(ProductDto.builder().name(req.getName()).imageUrl(req.getImageUrl()).build()), HttpStatus.CREATED);
+    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductRequest req) {
+        return new ResponseEntity<>(productService.save(ProductDto.builder().name(req.getName()).imageUrl(req.getImageUrl()).price(req.getPrice()).build()), HttpStatus.CREATED);
     }
 
     @DeleteMapping
-    public ResponseEntity<ApiRes> deleteProduct(@RequestBody IdReq requestBody) {
+    public ResponseEntity<ApiResponse> deleteProduct(@RequestBody IdRequest requestBody) {
         productService.delete(requestBody.id());
-        return new ResponseEntity<>(new ApiRes("Product has been deleted", true), HttpStatus.OK);
+        return ResponseEntity.ok(new ApiResponse("Product has been deleted", true));
     }
 
-//    @PostMapping
-//    public ResponseEntity<ProductDto> findProductById(@RequestBody IdReq request) {
-//        return ResponseEntity.ok(productService.findOne(request.id()));
-//    }
-    @Transactional
+    @PostMapping("/createMultiple")
+    public ResponseEntity<List<ProductDto>> createMultipleProducts(@RequestBody List<ProductRequest> reqList) {
+        List<ProductDto> productDtoList = reqList.stream().map(productRequest -> productService.save(ProductDto.builder().name(productRequest.getName()).imageUrl(productRequest.getImageUrl()).price(productRequest.getPrice()).build())).toList();
+        return ResponseEntity.ok(productDtoList);
+    }
+
+    @PostMapping
+    public ResponseEntity<ProductDto> findProductById(@RequestBody IdRequest request) {
+        return ResponseEntity.ok(productService.findOne(request.id()));
+    }
+
+    @PostMapping("/find")
+    public ResponseEntity<ProductDto> findProduct(@RequestBody FindProductRequest request) {
+        return ResponseEntity.ok(productService.findProduct(request.id(), request.name(), request.price()));
+    }
+
+    @PostMapping("/findDynamic")
+    public ListResponse<List<ProductDto>> findDynamicProduct(@RequestBody FindRequest req) {
+        List<ProductDto> products = productService.findDynamicProducts(req);
+        return new ListResponse<>(products.size(), products);
+    }
+
+    @PostMapping("/findDynamic/pagination")
+    private ListResponse<List<ProductDto>> findDynamicProductWithPagination(@RequestBody FindRequest req, @RequestParam int page, @RequestParam int size) {
+        List<ProductDto> productsWithPagination = productService.findDynamicProductsWithPagination(req, page, size);
+        return new ListResponse<>(productsWithPagination.size(), productsWithPagination);
+    }
+
     @PutMapping
     public ResponseEntity<ProductDto> fullUpdateProduct(@RequestBody ProductDto product) {
         return ResponseEntity.ok(productService.fullUpdate(product));
     }
-    @Transactional
+
     @PatchMapping
     public ResponseEntity<ProductDto> partialUpdateProduct(@RequestBody ProductDto product) {
-        return new ResponseEntity<>(productService.partialUpdate(product), HttpStatus.OK);
+        return ResponseEntity.ok(productService.partialUpdate(product));
     }
+
+    @PostMapping("/single-file-upload")
+    public ResponseEntity<Map<String,Object>> handleFileUploadUsingCurl(@RequestParam("file") MultipartFile file) {
+
+        Map<String,Object> map = new HashMap<>();
+
+        // Populate the map with file details
+        map.put("fileName", file.getOriginalFilename());
+        map.put("fileSize", file.getSize());
+        map.put("fileContentType", file.getContentType());
+
+        // File upload is successful
+        map.put("message", "File upload done");
+        return ResponseEntity.ok(map);
+    }
+
+    @PostMapping(value = "/uploadFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> uploadFile(@RequestPart(value = "file") MultipartFile file) throws IOException {
+        String path= productService.uploadFile(file);
+        return new ResponseEntity<>(new FileResponse(path, true), HttpStatus.OK);
+    }
+
 }

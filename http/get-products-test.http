@@ -1,0 +1,18 @@
+### Login User
+POST http://localhost:8080/api/v1/auth/authenticate
+Content-Type: application/json
+
+{
+  "email": "john.smith@yopmail.com",
+  "password": "123456"
+}
+
+> {%
+    client.global.set("auth-token", response.body.access_token);
+    client.global.set("refresh-token", response.body.refresh_token);
+%}
+
+### Get all products
+GET http://localhost:8080/api/v1/products
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}

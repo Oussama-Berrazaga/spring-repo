@@ -1,6 +1,6 @@
 package com.oussama.eshop.config;
 
-import com.oussama.eshop.controllers.responses.ApiRes;
+import com.oussama.eshop.controllers.responses.ApiResponse;
 import com.oussama.eshop.exceptions.CustomException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
@@ -28,25 +28,25 @@ public class MapperConfig {
     public static class GlobalExceptionHandler {
 
         @ExceptionHandler
-        public ResponseEntity<ApiRes> handleCustomException(final CustomException customException) {
-            return new ResponseEntity<>(new ApiRes(customException.getMessage(), false), HttpStatus.BAD_REQUEST);
+        public ResponseEntity<ApiResponse> handleCustomException(final CustomException customException) {
+            return new ResponseEntity<>(new ApiResponse(customException.getMessage(), false), HttpStatus.BAD_REQUEST);
         }
 
         @ExceptionHandler
-        public ResponseEntity<ApiRes> handleNullPointerException(final NullPointerException nullPointerException) {
-            return new ResponseEntity<>(new ApiRes(nullPointerException.getMessage(), false), HttpStatus.BAD_REQUEST);
+        public ResponseEntity<ApiResponse> handleNullPointerException(final NullPointerException nullPointerException) {
+            return new ResponseEntity<>(new ApiResponse(nullPointerException.getMessage(), false), HttpStatus.BAD_REQUEST);
         }
         @ExceptionHandler
-        public ResponseEntity<ApiRes> handleConstraintViolationException(final ConstraintViolationException constraintViolationException){
-            return new ResponseEntity<>(new ApiRes(constraintViolationException.getMessage(), false), HttpStatus.BAD_REQUEST);
+        public ResponseEntity<ApiResponse> handleConstraintViolationException(final ConstraintViolationException constraintViolationException){
+            return new ResponseEntity<>(new ApiResponse(constraintViolationException.getMessage(), false), HttpStatus.BAD_REQUEST);
         }
         @ExceptionHandler
-        public ResponseEntity<ApiRes> handleEntityNotFoundException(final EntityNotFoundException exception){
-            return new ResponseEntity<>(new ApiRes(exception.getMessage(), false), HttpStatus.BAD_REQUEST);
+        public ResponseEntity<ApiResponse> handleEntityNotFoundException(final EntityNotFoundException exception){
+            return new ResponseEntity<>(new ApiResponse(exception.getMessage(), false), HttpStatus.BAD_REQUEST);
         }
         @ExceptionHandler
-        public ResponseEntity<ApiRes> handleDuplicateKeyException(final DuplicateKeyException exception){
-            return new ResponseEntity<>(new ApiRes(exception.getMessage(), false), HttpStatus.BAD_REQUEST);
+        public ResponseEntity<ApiResponse> handleDuplicateKeyException(final DuplicateKeyException exception){
+            return new ResponseEntity<>(new ApiResponse(exception.getMessage(), false), HttpStatus.BAD_REQUEST);
         }
 
     }

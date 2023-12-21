@@ -1,6 +1,8 @@
 package com.oussama.eshop.services;
 
+import com.oussama.eshop.controllers.requests.FindRequest;
 import com.oussama.eshop.domain.dto.CustomerDto;
+import com.oussama.eshop.domain.dto.ProductDto;
 import com.oussama.eshop.domain.entities.Customer;
 
 import java.util.List;
@@ -21,4 +23,6 @@ public interface CustomerService {
     boolean exists(Integer id);
 
     CustomerDto findByEmail(String email);
+
+    List<CustomerDto> findDynamicCustomers(FindRequest findRequest);
 }

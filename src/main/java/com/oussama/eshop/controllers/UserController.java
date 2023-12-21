@@ -1,6 +1,6 @@
 package com.oussama.eshop.controllers;
 
-import com.oussama.eshop.controllers.requests.ChangePasswordReq;
+import com.oussama.eshop.controllers.requests.ChangePasswordRequest;
 import com.oussama.eshop.domain.dto.UserDto;
 import com.oussama.eshop.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class UserController {
 
     @PatchMapping("/changePassword")
     public ResponseEntity<?> changePassword(
-            @RequestBody ChangePasswordReq request,
+            @RequestBody ChangePasswordRequest request,
             Principal connectedUser
     ) {
         userService.changePassword(request, connectedUser);

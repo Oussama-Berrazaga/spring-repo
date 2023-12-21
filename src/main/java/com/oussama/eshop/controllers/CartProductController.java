@@ -1,9 +1,9 @@
 package com.oussama.eshop.controllers;
 
-import com.oussama.eshop.controllers.requests.AddProductReq;
-import com.oussama.eshop.controllers.responses.ApiRes;
-import com.oussama.eshop.controllers.responses.CartProductsRes;
-import com.oussama.eshop.controllers.requests.IdReq;
+import com.oussama.eshop.controllers.requests.AddProductRequest;
+import com.oussama.eshop.controllers.responses.ApiResponse;
+import com.oussama.eshop.controllers.responses.CartProductsResponse;
+import com.oussama.eshop.controllers.requests.IdRequest;
 import com.oussama.eshop.domain.dto.CartDto;
 import com.oussama.eshop.domain.dto.CustomerDto;
 import com.oussama.eshop.domain.dto.ProductDto;
@@ -44,7 +44,7 @@ public class CartProductController {
         CustomerDto customer = customerService.findByEmail(auth.getName());
         List<CartProduct> foundProducts = cartProductService.findCartProductsByCustomer(customer.getId());
         List<?> list = foundProducts.stream()
-                .map(cartProduct -> CartProductsRes.builder()
+                .map(cartProduct -> CartProductsResponse.builder()
                         .id(cartProduct.getProduct().getId())
                         .name(cartProduct.getProduct().getName())
                         .imageUrl(cartProduct.getProduct().getImageUrl())
@@ -54,12 +54,12 @@ public class CartProductController {
     }
 
     @PostMapping("/getProducts")
-    public ResponseEntity<List<CartProductsRes>> showProductsInCart(@RequestBody IdReq request) {
+    public ResponseEntity<List<CartProductsResponse>> showProductsInCart(@RequestBody IdRequest request) {
         boolean cartExists = cartService.exists(request.id());
         if (cartExists) {
             List<CartProduct> cartProductByCartId = cartProductService.findCartProductByCartId(request.id());
-            List<CartProductsRes> list = cartProductByCartId.stream().map(cartProduct -> {
-                CartProductsRes response = new CartProductsRes(cartProduct.getQuantity());
+            List<CartProductsResponse> list = cartProductByCartId.stream().map(cartProduct -> {
+                CartProductsResponse response = new CartProductsResponse(cartProduct.getQuantity());
                 response.setId(cartProduct.getProduct().getId());
                 response.setName(cartProduct.getProduct().getName());
                 response.setImageUrl(cartProduct.getProduct().getImageUrl());
@@ -71,7 +71,7 @@ public class CartProductController {
 
     @Transactional
     @PostMapping("/add")
-    public ResponseEntity<ApiRes> addToCart(@RequestBody AddProductReq request) {
+    public ResponseEntity<ApiResponse> addToCart(@RequestBody AddProductRequest request) {
 
         // Retrieve product and cart entities
         ProductDto product = productService.findOne(request.productId());
@@ -89,7 +89,7 @@ public class CartProductController {
 
         // Save the CartProduct entity
         cartProductService.save(cartProduct);
-        return new ResponseEntity<>(new ApiRes("Product added to cart successfully", true), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse("Product added to cart successfully", true), HttpStatus.OK);
 
     }
 }

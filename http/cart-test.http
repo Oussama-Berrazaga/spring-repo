@@ -1,0 +1,41 @@
+### Login User
+POST http://localhost:8080/api/v1/auth/authenticate
+Content-Type: application/json
+
+{
+  "email": "john.smith@yopmail.com",
+  "password": "123456"
+}
+
+> {%
+    client.global.set("auth-token", response.body.access_token);
+    client.global.set("refresh-token", response.body.refresh_token);
+%}
+
+### Query the me endpoint
+GET http://localhost:8080/api/v1/customers/me
+Authorization: Bearer {{auth-token}}
+
+> {% client.global.set("cartId", response.body.cart.id) %}
+
+### Query the add product to cart
+POST http://localhost:8080/api/v1/cartProduct/add
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+{
+  "cartId": {{cartId}},
+  "productId": 1,
+  "quantity": 10
+}
+
+
+### Query the cart products
+POST http://localhost:8080/api/v1/cartProduct/getProducts
+Content-Type: application/json
+Authorization: Bearer {{auth-token}}
+
+{
+  "id": {{cartId}}
+}
+

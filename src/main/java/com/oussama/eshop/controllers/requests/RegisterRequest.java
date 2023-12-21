@@ -1,6 +1,5 @@
 package com.oussama.eshop.controllers.requests;
 
-import com.oussama.eshop.domain.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterReq{
+public class RegisterRequest {
 
     private String firstname;
     private String lastname;
     private String email;
     private String password;
-    private Role role;
 }

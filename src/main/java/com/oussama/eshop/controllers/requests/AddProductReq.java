@@ -1,4 +1,0 @@
-package com.oussama.eshop.controllers.requests;
-
-public record AddProductReq(Integer cartId, Integer productId, Integer quantity) {
-}

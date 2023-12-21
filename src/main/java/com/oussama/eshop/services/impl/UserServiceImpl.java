@@ -1,6 +1,6 @@
 package com.oussama.eshop.services.impl;
 
-import com.oussama.eshop.controllers.requests.ChangePasswordReq;
+import com.oussama.eshop.controllers.requests.ChangePasswordRequest;
 import com.oussama.eshop.domain.dto.UserDto;
 import com.oussama.eshop.domain.entities.User;
 import com.oussama.eshop.mappers.Mapper;
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
         return mapper.mapTo(user);
     }
 
-    public void changePassword(ChangePasswordReq request, Principal connectedUser) {
+    public void changePassword(ChangePasswordRequest request, Principal connectedUser) {
 
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
 

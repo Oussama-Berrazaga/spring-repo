@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -30,6 +29,8 @@ public class Product {
 
     @JsonProperty("image_url")
     private String imageUrl;
+
+    private Long price;
     //@ManyToMany(mappedBy = "products")
     @JsonIgnore
     @OneToMany(mappedBy = "product")
