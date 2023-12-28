@@ -1,9 +1,9 @@
 package com.oussama.eshop.controllers;
 
-import com.oussama.eshop.controllers.requests.AddProductRequest;
-import com.oussama.eshop.controllers.responses.ApiResponse;
-import com.oussama.eshop.controllers.responses.CartProductsResponse;
-import com.oussama.eshop.controllers.requests.IdRequest;
+import com.oussama.eshop.domain.dto.requests.AddProductRequest;
+import com.oussama.eshop.domain.dto.responses.ApiResponse;
+import com.oussama.eshop.domain.dto.responses.CartProductsResponse;
+import com.oussama.eshop.domain.dto.requests.IdRequest;
 import com.oussama.eshop.domain.dto.CartDto;
 import com.oussama.eshop.domain.dto.CustomerDto;
 import com.oussama.eshop.domain.dto.ProductDto;

@@ -1,6 +1,6 @@
 package com.oussama.eshop.specifications;
 
-import com.oussama.eshop.controllers.requests.FindRequest;
+import com.oussama.eshop.domain.dto.requests.FindRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;

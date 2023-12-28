@@ -1,4 +1,4 @@
-package com.oussama.eshop.controllers.responses;
+package com.oussama.eshop.domain.dto.responses;
 
 import com.oussama.eshop.domain.entities.CartProduct;
 import com.oussama.eshop.domain.entities.Product;

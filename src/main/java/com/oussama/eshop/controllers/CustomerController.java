@@ -1,12 +1,10 @@
 package com.oussama.eshop.controllers;
 
-import com.oussama.eshop.controllers.requests.FindRequest;
-import com.oussama.eshop.controllers.responses.ListResponse;
+import com.oussama.eshop.domain.dto.requests.FindRequest;
+import com.oussama.eshop.domain.dto.responses.ListResponse;
 import com.oussama.eshop.domain.dto.CartDto;
 import com.oussama.eshop.domain.dto.CustomerDto;
-import com.oussama.eshop.domain.dto.ProductDto;
 import com.oussama.eshop.domain.entities.Cart;
-import com.oussama.eshop.domain.entities.Customer;
 import com.oussama.eshop.mappers.Mapper;
 import com.oussama.eshop.services.CartService;
 import com.oussama.eshop.services.CustomerService;

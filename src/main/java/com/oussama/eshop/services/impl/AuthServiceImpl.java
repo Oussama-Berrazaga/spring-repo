@@ -2,9 +2,9 @@ package com.oussama.eshop.services.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oussama.eshop.config.JwtService;
-import com.oussama.eshop.controllers.requests.AuthRequest;
-import com.oussama.eshop.controllers.requests.RegisterRequest;
-import com.oussama.eshop.controllers.responses.AuthResponse;
+import com.oussama.eshop.domain.dto.requests.AuthRequest;
+import com.oussama.eshop.domain.dto.requests.RegisterRequest;
+import com.oussama.eshop.domain.dto.responses.AuthResponse;
 import com.oussama.eshop.domain.entities.Cart;
 import com.oussama.eshop.domain.entities.Customer;
 import com.oussama.eshop.domain.entities.Token;
@@ -28,7 +28,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {

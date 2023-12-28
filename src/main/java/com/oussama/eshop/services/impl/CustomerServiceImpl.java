@@ -1,6 +1,6 @@
 package com.oussama.eshop.services.impl;
 
-import com.oussama.eshop.controllers.requests.FindRequest;
+import com.oussama.eshop.domain.dto.requests.FindRequest;
 import com.oussama.eshop.domain.dto.CustomerDto;
 import com.oussama.eshop.domain.entities.Customer;
 import com.oussama.eshop.mappers.Mapper;

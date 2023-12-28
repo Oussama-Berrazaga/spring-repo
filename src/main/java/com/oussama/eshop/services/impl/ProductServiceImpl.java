@@ -7,7 +7,7 @@ import com.oussama.eshop.mappers.Mapper;
 import com.oussama.eshop.repositories.ProductRepository;
 import com.oussama.eshop.services.ProductService;
 import com.oussama.eshop.specifications.EntitySpecification;
-import com.oussama.eshop.controllers.requests.FindRequest;
+import com.oussama.eshop.domain.dto.requests.FindRequest;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -35,17 +34,19 @@ public class ProductServiceImpl implements ProductService {
     private final Mapper<Product, ProductDto> mapper;
     private final EntitySpecification<Product> entitySpecification;
 
-//    @PostConstruct
-//    public void initDB() {
-//        List<Product> products = IntStream.rangeClosed(1, 200)
-//                .mapToObj(i -> Product.builder()
-//                        .name("Product " + i)
-//                        .imageUrl("https://example.com/product_" + i + ".jpg")
-//                        .price(new Random().nextLong(1000L, 9999L))
-//                        .build())
-//                .collect(Collectors.toList());
-//        productRepository.saveAll(products);
-//    }
+    @PostConstruct
+    public void initDB() {
+        if (productRepository.findAll().isEmpty()) {
+            List<Product> products = IntStream.rangeClosed(1, 200)
+                    .mapToObj(i -> Product.builder()
+                            .name("Product " + i)
+                            .imageUrl("https://example.com/product_" + i + ".jpg")
+                            .price(new Random().nextLong(1000L, 9999L))
+                            .build())
+                    .collect(Collectors.toList());
+            productRepository.saveAll(products);
+        }
+    }
 
     @Override
     public List<ProductDto> findAll() {

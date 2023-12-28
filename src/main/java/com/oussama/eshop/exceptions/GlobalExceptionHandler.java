@@ -1,7 +1,6 @@
-package com.oussama.eshop.controllers;
+package com.oussama.eshop.exceptions;
 
-import com.oussama.eshop.controllers.responses.ErrorResponse;
-import com.oussama.eshop.exceptions.CustomException;
+import com.oussama.eshop.domain.dto.responses.ErrorResponse;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.persistence.EntityNotFoundException;

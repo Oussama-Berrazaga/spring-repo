@@ -1,12 +1,9 @@
 package com.oussama.eshop.services;
 
-import com.oussama.eshop.controllers.requests.FindRequest;
+import com.oussama.eshop.domain.dto.requests.FindRequest;
 import com.oussama.eshop.domain.dto.CustomerDto;
-import com.oussama.eshop.domain.dto.ProductDto;
-import com.oussama.eshop.domain.entities.Customer;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CustomerService {
 

@@ -4,15 +4,15 @@ logging:
     org:
       springframework:
         web: INFO
-        boot:
+#        boot:
  #         autoconfigure: DEBUG
-        security: INFO
-      hibernate:
-        type:
-          descriptor:
-            sql:
-              BasicBinder: TRACE
-        SQL: DEBUG
+#        security: INFO
+#      hibernate:
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE
+#        SQL: DEBUG
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/eshop
@@ -36,3 +36,15 @@ application:
       secret-key: d9b40be7357a1ffd4c45f5897a85bc8021029d21781f158e0cde3ba6d71343bb
       expiration: 86400000 # one day
       refresh-expiration: 604800000 # one week
+    accounts:
+      test:
+        email: "test@yopmail.com"
+        password: "test"
+        firstname: "Test"
+        lastname: "Test"
+      admin:
+        email: "admin@yopmail.com"
+        password: "admin"
+        firstname: "Admin"
+        lastname: "Admin"
+

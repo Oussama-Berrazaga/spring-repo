@@ -1,7 +1,7 @@
 package com.oussama.eshop.services;
 
 import com.oussama.eshop.domain.dto.ProductDto;
-import com.oussama.eshop.controllers.requests.FindRequest;
+import com.oussama.eshop.domain.dto.requests.FindRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

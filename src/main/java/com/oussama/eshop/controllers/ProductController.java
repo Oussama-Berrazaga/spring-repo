@@ -1,14 +1,16 @@
 package com.oussama.eshop.controllers;
 
-import com.oussama.eshop.controllers.requests.FindProductRequest;
-import com.oussama.eshop.controllers.requests.IdRequest;
-import com.oussama.eshop.controllers.requests.ProductRequest;
-import com.oussama.eshop.controllers.responses.ApiResponse;
-import com.oussama.eshop.controllers.responses.FileResponse;
-import com.oussama.eshop.controllers.responses.ListResponse;
+import com.oussama.eshop.domain.dto.requests.FindProductRequest;
+import com.oussama.eshop.domain.dto.requests.IdRequest;
+import com.oussama.eshop.domain.dto.requests.ProductRequest;
+import com.oussama.eshop.domain.dto.responses.ApiResponse;
+import com.oussama.eshop.domain.dto.responses.FileResponse;
+import com.oussama.eshop.domain.dto.responses.ListResponse;
 import com.oussama.eshop.domain.dto.ProductDto;
 import com.oussama.eshop.services.ProductService;
-import com.oussama.eshop.controllers.requests.FindRequest;
+import com.oussama.eshop.domain.dto.requests.FindRequest;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/products")
+@Tag(name = "Products")
 @Log4j2
 public class ProductController {
 
@@ -37,6 +40,21 @@ public class ProductController {
 //        return new ResponseEntity<>(new ListResponse<>(products.size(), products), HttpStatus.OK);
 //    }
 
+    @Operation(
+            description = "Get endpoint for sorting products",
+            summary = "This is a summary for management get endpoint",
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            description = "Unauthorized / Invalid Token",
+                            responseCode = "403"
+                    )
+            }
+
+    )
     @GetMapping
     private ListResponse<List<ProductDto>> getProductsWithSort(@RequestParam String field) {
         List<ProductDto> allProducts = productService.findProductsWithSorting(field);

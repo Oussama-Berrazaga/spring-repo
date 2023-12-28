@@ -1,6 +1,6 @@
 package com.oussama.eshop.services;
 
-import com.oussama.eshop.controllers.requests.ChangePasswordRequest;
+import com.oussama.eshop.domain.dto.requests.ChangePasswordRequest;
 import com.oussama.eshop.domain.dto.UserDto;
 import jakarta.validation.constraints.Email;
 

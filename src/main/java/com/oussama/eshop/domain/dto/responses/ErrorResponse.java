@@ -1,4 +1,4 @@
-package com.oussama.eshop.controllers.responses;
+package com.oussama.eshop.domain.dto.responses;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

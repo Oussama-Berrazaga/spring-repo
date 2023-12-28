@@ -1,6 +1,6 @@
 package com.oussama.eshop.config;
 
-import com.oussama.eshop.controllers.responses.ApiResponse;
+import com.oussama.eshop.domain.dto.responses.ApiResponse;
 import com.oussama.eshop.exceptions.CustomException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
