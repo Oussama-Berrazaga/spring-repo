@@ -10,6 +10,7 @@ import com.oussama.eshop.domain.dto.ProductDto;
 import com.oussama.eshop.domain.entities.*;
 import com.oussama.eshop.mappers.Mapper;
 import com.oussama.eshop.services.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@Tag(name = "Cart products")
 @RestController
 @RequestMapping("/api/v1/cartProduct")
 @RequiredArgsConstructor
